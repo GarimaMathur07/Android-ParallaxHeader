@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <FrameLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="#0072C6"
+            android:gravity="center"
+            android:text="to be simple" />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/list_container"
+        android:layout_width="match_parent"
+        android:layout_height="400dip"
+        android:layout_above="@+id/searchLocation">
+
+        <com.astuetz.PagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:background="#0072C6" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabs" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/searchLocation"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:drawableRight="@android:drawable/ic_menu_search"
+        android:gravity="left|center_vertical"
+        android:hint="Search locations..."></EditText>
+</RelativeLayout>
+
+<!-- From: file:/C:/Users/home/git/Android-ParallaxHeader/res/layout-xhdpi/activity_main.xml -->

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="500"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:propertyName="translationY"
+        android:valueFrom="950"
+        android:valueTo="0"
+        android:valueType="floatType" />
+</set><!-- From: file:/C:/Users/home/git/Android-ParallaxHeader/res/animator/slide_up_animation.xml -->
