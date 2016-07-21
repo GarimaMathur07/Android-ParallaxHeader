@@ -3,6 +3,7 @@ package com.kmshack.newsstand;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -33,13 +37,15 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private int mHeaderHeight;
     private int mMinHeaderTranslation;
 
-    private EditText searchLocation;
     private int mLastY;
     private String frontEndScreen = "LIST";
     private boolean isFirstTime = true;
 
     Animator slideUpAnimation, slideDownAnimation;
-    RelativeLayout rl;
+    LinearLayout rl;
+    EditText searchLocation, search;
+    RelativeLayout searchConatiner;
+    Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         slideUpAnimation = AnimatorInflater.loadAnimator(this, R.animator.slide_up_animation);
 
         mHeader = findViewById(R.id.header);
-        rl = (RelativeLayout) findViewById(R.id.list_container);
+        searchConatiner = (RelativeLayout) findViewById(R.id.search_container);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        rl = (LinearLayout) findViewById(R.id.list_container);
+        searchLocation = (EditText) findViewById(R.id.searchLocation);
+        search = (EditText) findViewById(R.id.search);
+
         mHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +87,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 }
             }
         });
-        searchLocation = (EditText) findViewById(R.id.searchLocation);
 
         mPagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         mPagerSlidingTabStrip.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +107,48 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         mPagerSlidingTabStrip.setViewPager(mViewPager);
         mPagerSlidingTabStrip.setOnPageChangeListener(this);
         mLastY = 0;
+        searchLocation.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mPagerSlidingTabStrip.setVisibility(View.GONE);
+                    searchConatiner.setVisibility(View.VISIBLE);
+                    searchLocation.setVisibility(View.GONE);
+                } else {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(search, InputMethodManager.SHOW_FORCED);
+                }
+            }
+        });
+        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(search, InputMethodManager.SHOW_IMPLICIT);
+                }
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchConatiner.setVisibility(View.GONE);
+                mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
+                searchLocation.setVisibility(View.VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+            }
+        });
+
+        /*searchLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPagerSlidingTabStrip.setVisibility(View.GONE);
+                search.setVisibility(View.VISIBLE);
+                searchLocation.setVisibility(View.GONE);
+            }
+        });*/
     }
 
     @Override
