@@ -83,8 +83,8 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private int scrollOffset = 52;
 	private int indicatorHeight = 3;
 	private int underlineHeight = 2;
-	private int dividerPadding = 12;
-	private int tabPadding = 40;
+	private int dividerPadding = 0;
+	private int tabPadding = 24;
 	private int dividerWidth = 0;
 
 	private int tabTextSize = 12;
@@ -229,7 +229,6 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		TextView tab = new TextView(getContext());
 		tab.setText(title);
 		tab.setGravity(Gravity.CENTER);
-		tab.setSingleLine();
 
 		addTab(position, tab);
 	}

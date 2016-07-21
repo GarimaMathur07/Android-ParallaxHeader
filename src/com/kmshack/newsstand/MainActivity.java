@@ -221,7 +221,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     public class PagerAdapter extends FragmentPagerAdapter {
 
         private SparseArrayCompat<ScrollTabHolder> mScrollTabHolders;
-        private final String[] TITLES = {"Page 1", "Page 2", "Page 3"};
+        private final String[] TITLES = {"26\nLOCATIONS", "7\nWith IN 5MI", "4\nFAVORITE"};
         private ScrollTabHolder mListener;
 
         public PagerAdapter(FragmentManager fm) {
