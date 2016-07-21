@@ -133,9 +133,9 @@ containing a value of this type.
         public static final int image0=0x7f080006;
         public static final int image1=0x7f080007;
         public static final int listView=0x7f080005;
-        public static final int list_container=0x7f080001;
+        public static final int list_container=0x7f080002;
         public static final int pager=0x7f080004;
-        public static final int searchLocation=0x7f080002;
+        public static final int searchLocation=0x7f080001;
         public static final int tabs=0x7f080003;
     }
     public static final class layout {
