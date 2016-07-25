@@ -2,20 +2,6 @@
 <items version="2" >
 
     <item
-        jar="D:\Android-ParallaxHeaderViewPager-master\Android-ParallaxHeaderViewPager-master\libs\android-support-v4.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="db0f122c99ef9f90dbab3fada6d191f2880cbb8e">
-        <dex dex="D:\Android-ParallaxHeaderViewPager-master\Android-ParallaxHeaderViewPager-master\build\intermediates\pre-dexed\debug\android-support-v4-76c9e605c15bb473dfcd864a70e5a60e658df34d.jar" />
-    </item>
-    <item
-        jar="C:\Users\home\git\Android-Parallax\libs\android-support-v4.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="db0f122c99ef9f90dbab3fada6d191f2880cbb8e">
-        <dex dex="C:\Users\home\git\Android-Parallax\build\intermediates\pre-dexed\debug\android-support-v4-9ceb7362d2a1555d7ede12e1e11c805127540123.jar" />
-    </item>
-    <item
         jar="C:\Users\home\git\Android-ParallaxHeader\libs\android-support-v4.jar"
         jumboMode="false"
         revision="22.0.1"

@@ -27,7 +27,7 @@
         android:layout_above="@+id/searchLocation"
         android:orientation="vertical">
 
-        <com.astuetz.PagerSlidingTabStrip
+        <com.parallax.header.pager.PagerSlidingTabStrip
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="50dip"
