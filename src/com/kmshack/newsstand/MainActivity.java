@@ -126,6 +126,9 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 if (hasFocus) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(search, InputMethodManager.SHOW_IMPLICIT);
+                    if (frontEndScreen.equals("MAP")) {
+                        startSlideUpAnimation(v);
+                    }
                 }
             }
         });
@@ -138,6 +141,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 searchLocation.setVisibility(View.VISIBLE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+
             }
         });
 
