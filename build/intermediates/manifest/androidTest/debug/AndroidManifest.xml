@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kmshack.newsstand.test">
+    package="com.parallax.header.test">
 
     <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.kmshack.newsstand"
+                     android:targetPackage="com.parallax.header"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.kmshack.newsstand"/>
+                     android:label="Tests for com.parallax.header"/>
 </manifest>
