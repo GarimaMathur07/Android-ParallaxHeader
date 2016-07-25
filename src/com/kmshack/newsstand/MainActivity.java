@@ -136,23 +136,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchConatiner.setVisibility(View.GONE);
-                mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
-                searchLocation.setVisibility(View.VISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+                screenReset();
 
             }
         });
-
-        /*searchLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPagerSlidingTabStrip.setVisibility(View.GONE);
-                search.setVisibility(View.VISIBLE);
-                searchLocation.setVisibility(View.GONE);
-            }
-        });*/
     }
 
     @Override
@@ -315,5 +302,23 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
             return mScrollTabHolders;
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchConatiner.getVisibility() == View.VISIBLE) {
+            screenReset();
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    private void screenReset() {
+        searchConatiner.setVisibility(View.GONE);
+        mPagerSlidingTabStrip.setVisibility(View.VISIBLE);
+        searchLocation.setVisibility(View.VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
     }
 }
