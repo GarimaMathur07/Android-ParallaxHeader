@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.parallax.header.pager.CustomViewPager;
 import com.parallax.header.pager.PagerSlidingTabStrip;
 
 
@@ -31,7 +32,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private View mHeader;
 
     private PagerSlidingTabStrip mPagerSlidingTabStrip;
-    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
     private int mMinHeaderHeight;
@@ -97,7 +98,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
             }
         });
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = (CustomViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(3);
 
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
@@ -115,8 +116,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                     mPagerSlidingTabStrip.setVisibility(View.GONE);
                     searchConatiner.setVisibility(View.VISIBLE);
                     searchLocation.setVisibility(View.GONE);
-                    mViewPager.setOffscreenPageLimit(1);
-                    mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+                    mViewPager.setPagingEnabled(false);
                     mViewPager.setAdapter(mPagerAdapter);
 
                 } else {
@@ -191,49 +191,43 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         if (positionOffsetPixels > 0) {
 
+            int currentItem = mViewPager.getCurrentItem();
 
-            if (searchConatiner.getVisibility() != View.VISIBLE) {
+            SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
+            ScrollTabHolder currentHolder;
 
-
-                int currentItem = mViewPager.getCurrentItem();
-
-                SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
-                ScrollTabHolder currentHolder;
-
-                if (position < currentItem) {
-                    currentHolder = scrollTabHolders.valueAt(position);
-                } else {
-                    currentHolder = scrollTabHolders.valueAt(position + 1);
-                }
-
-                if (NEEDS_PROXY) {
-                    // TODO is not good
-                    currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
-                    mHeader.postInvalidate();
-                } else {
-                    currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
-                }
+            if (position < currentItem) {
+                currentHolder = scrollTabHolders.valueAt(position);
             } else {
-
+                currentHolder = scrollTabHolders.valueAt(position + 1);
             }
+
+            if (NEEDS_PROXY) {
+                // TODO is not good
+                currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
+                mHeader.postInvalidate();
+            } else {
+                currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
+            }
+
         }
 
     }
 
     @Override
     public void onPageSelected(int position) {
-        if (searchConatiner.getVisibility() != View.VISIBLE) {
-            SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
-            ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
 
-            if (NEEDS_PROXY) {
-                //TODO is not good
-                currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
-                mHeader.postInvalidate();
-            } else {
-                currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
-            }
+        SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
+        ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
+
+        if (NEEDS_PROXY) {
+            //TODO is not good
+            currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
+            mHeader.postInvalidate();
+        } else {
+            currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
         }
+
     }
 
 	/*@Override
@@ -337,6 +331,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         searchLocation.setVisibility(View.VISIBLE);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
+        mViewPager.setPagingEnabled(true);
     }
 
 }
