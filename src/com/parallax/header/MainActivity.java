@@ -115,6 +115,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                     mPagerSlidingTabStrip.setVisibility(View.GONE);
                     searchConatiner.setVisibility(View.VISIBLE);
                     searchLocation.setVisibility(View.GONE);
+                    mViewPager.setOffscreenPageLimit(1);
+                    mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+                    mViewPager.setAdapter(mPagerAdapter);
+
                 } else {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(search, InputMethodManager.SHOW_FORCED);
@@ -186,37 +190,49 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         }
 
         if (positionOffsetPixels > 0) {
-            int currentItem = mViewPager.getCurrentItem();
 
-            SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
-            ScrollTabHolder currentHolder;
 
-            if (position < currentItem) {
-                currentHolder = scrollTabHolders.valueAt(position);
+            if (searchConatiner.getVisibility() != View.VISIBLE) {
+
+
+                int currentItem = mViewPager.getCurrentItem();
+
+                SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
+                ScrollTabHolder currentHolder;
+
+                if (position < currentItem) {
+                    currentHolder = scrollTabHolders.valueAt(position);
+                } else {
+                    currentHolder = scrollTabHolders.valueAt(position + 1);
+                }
+
+                if (NEEDS_PROXY) {
+                    // TODO is not good
+                    currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
+                    mHeader.postInvalidate();
+                } else {
+                    currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
+                }
             } else {
-                currentHolder = scrollTabHolders.valueAt(position + 1);
+
             }
+        }
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (searchConatiner.getVisibility() != View.VISIBLE) {
+            SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
+            ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
 
             if (NEEDS_PROXY) {
-                // TODO is not good
+                //TODO is not good
                 currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
                 mHeader.postInvalidate();
             } else {
                 currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
             }
-        }
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        SparseArrayCompat<ScrollTabHolder> scrollTabHolders = mPagerAdapter.getScrollTabHolders();
-        ScrollTabHolder currentHolder = scrollTabHolders.valueAt(position);
-        if (NEEDS_PROXY) {
-            //TODO is not good
-            currentHolder.adjustScroll(mHeader.getHeight() - mLastY);
-            mHeader.postInvalidate();
-        } else {
-            currentHolder.adjustScroll((int) (mHeader.getHeight() + mHeader.getTranslationY()));
         }
     }
 
@@ -322,4 +338,5 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
     }
+
 }
